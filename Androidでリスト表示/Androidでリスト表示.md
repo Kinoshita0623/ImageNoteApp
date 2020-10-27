@@ -33,16 +33,16 @@ Activityは**EmptyActivity**を選択します。
 - パッケージ名:jp.kinoshita.imagenoteapp
 - minSdk: Android 6.0
 
-<img src="./img01.png">
+<img src="./img01.png" width="600">
 
 ## レイアウトを作成します。
 TextViewは削除しておいてください。  
 res/layout/activity_main.xml ファイルを開きます。  
 XMLが表示されている人は以下の画像を参考に「レイアウトのプレビュー方式」から切り替えておいてください  
-<img src="./img02.png">
+<img src="./img02.png" width="600">
 
 パレットの虫眼鏡（検索）アイコンを押して[ RecyclerView ]と検索します。  
-<img src="./img03.png">
+<img src="./img03.png" width="600">
 
 それをレイアウトへ貼り付けます。  
 何かダイアログが出てきますが**OKを選択してください**
@@ -138,13 +138,13 @@ activity_main.xmlの全体像
 
 ### Noteクラスを作成する
 「パッケージ名.アプリ名」を右クリックして  
-<img src="./img04.png">
+<img src="./img04.png" width="600">
 
 New(新規) -> Java Classを選択します。  
-<img src="./img06.png">  
+<img src="./img06.png" width="600">  
 
 Name: に[Note]と入力し、OKします。  
-それ以外の項目はわからない場合は入力しないでください。  <img src="./img05.png">
+それ以外の項目はわからない場合は入力しないでください。  <img src="./img05.png" width="600">
 
 Noteクラスが作成されたと思います。
 ```
@@ -195,10 +195,10 @@ public class Note {
 手動で実装してもいいのですがAndroidStudioにはgetterメソッドを自動で作成してくれる機能があります。
 
 Noteクラスを右クリックしてGenerate（生成する）を選択します。
-<img src="./img07.png">
+<img src="./img07.png" width="600">
 
 Getterを選択します。（上から二番目）  
-<img src="./img08.png">
+<img src="./img08.png" width="600">
 
 作成したフィールド全てを選択します。    
 **Shiftキーを押しながら矢印キーを押すことで選択できます。**  
@@ -352,7 +352,7 @@ RecyclerViewの仕組みとしてはレイアウトを何度も使い回すこ�
 画像とタイトルと本文を表示するためのレイアウトを作成します。
 resのlayoutを右クリックしてLayout Resource Fileを選択します。  
 名前は**item_note.xml**にしました  
-<img src="./img10.png">
+<img src="./img10.png"　width="600">
 
 レイアウトは以下のようになります。  
 使われているidとViewを把握さえすればコピーしてもらってもOKです。
