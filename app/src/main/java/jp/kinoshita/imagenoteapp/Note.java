@@ -7,4 +7,15 @@ public class Note {
     private String text;
 
 
+    public int getImageResourceId() {
+        return imageResourceId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getText() {
+        return text;
+    }
 }
