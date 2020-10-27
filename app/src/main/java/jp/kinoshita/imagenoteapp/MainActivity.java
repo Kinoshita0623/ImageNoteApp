@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
             "猫が仕事の邪魔をする",
             "しごとが・・",
             "猫の手も借りたい",
-            "猫の手も借りたい",
             "動物用の薬",
             "猫に小判",
             "オッドアイの猫"
