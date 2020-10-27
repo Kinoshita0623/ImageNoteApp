@@ -6,6 +6,12 @@ public class Note {
     private String title;
     private String text;
 
+    public Note(int imageResourceId, String title, String text) {
+        this.imageResourceId = imageResourceId;
+        this.title = title;
+        this.text = text;
+    }
+
 
     public int getImageResourceId() {
         return imageResourceId;
