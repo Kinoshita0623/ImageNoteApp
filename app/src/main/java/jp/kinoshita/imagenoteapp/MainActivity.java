@@ -1,6 +1,8 @@
 package jp.kinoshita.imagenoteapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
@@ -59,5 +61,22 @@ public class MainActivity extends AppCompatActivity {
             list.add(note);
         }
         this.notes = list;
+
+        // RecyclerViewを取得する
+        RecyclerView notesView = findViewById(R.id.notes_view);
+
+        // レイアウトマネージャーをインスタンス化する
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        // レイアウトマネージャーをRecyclerViewにセットする
+        notesView.setLayoutManager(layoutManager);
+
+        // NoteListAdapterをインスタンス化する。コンストラクタにサンプルデータを渡す
+        NoteListAdapter adapter = new NoteListAdapter(this.notes);
+
+        // RecyclerViewにNoteListAdapterをセットする
+        notesView.setAdapter(adapter);
+
+
     }
 }
