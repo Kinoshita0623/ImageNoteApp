@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,10 +42,22 @@ public class MainActivity extends AppCompatActivity {
             "オッドアイの猫を発見しました\n神秘的！！"
     };
 
+    List<Note> notes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ArrayList<Note> list = new ArrayList<>();
+        for(int i = 0; i < imageResources.length; i ++){
+
+            // 作成したデータをもとにNoteを作成する
+            Note note = new Note(imageResources[i], titles[i], texts[i]);
+
+            // 作成したNoteをArrayListに追加する。
+            list.add(note);
+        }
+        this.notes = list;
     }
 }
