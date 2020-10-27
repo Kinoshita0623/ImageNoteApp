@@ -263,7 +263,8 @@ public class Note {
 
 ## 画像を取り込む
 添付した画像をdrawableに入れてください。  
-（間違ってdrawable-v24に入れないように！！）
+（間違ってdrawable-v24に入れないように！！）  
+[添付ファイル](./images/)
 
 
 ## データの準備
