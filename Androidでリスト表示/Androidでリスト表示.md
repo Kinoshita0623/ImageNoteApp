@@ -98,7 +98,7 @@ XMLが表示されるようになると思います。
 
 ## RecyclerViewにidを設定する。
 このままでは**Activity**から**RecyclerViewのインスタンス**を取得することができないので、RecyclerViewにidを設定してあげます。
-```
+```xml:activity_main.xml
 android:id="@+id/notes_view"
 ```
 
