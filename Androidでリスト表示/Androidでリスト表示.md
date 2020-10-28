@@ -2,7 +2,8 @@
 Androidで一覧表示を実現するにはどうすればいいでしょうか？・・  
 - LinearLayoutのaddChildメソッドを使用する
 - 手動で一つずつ実装する。
-- 
+- Viewを継承してonDrawで描画する。  
+
 上記の方法でもできなくはないですが、  
 **RecyclerView**を使用してお手軽にリスト表示を実現することができます。  
 
@@ -20,7 +21,7 @@ Androidで一覧表示を実現するにはどうすればいいでしょうか�
 - 表示するものが多くてスクロールしたい  
   ScrollViewとLinearLayoutを使ってください
 
-# 作るもの
+## 作るもの
 今回は**画像とその画像のタイトルと説明を一覧表示**するアプリを作成しながら、  
 **RecyclerView**の使い方を学習します。  
 <img src="img12.png" width="250">
@@ -95,7 +96,7 @@ XMLが表示されるようになると思います。
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-### RecyclerViewにidを設定する。
+## RecyclerViewにidを設定する。
 このままでは**Activity**から**RecyclerViewのインスタンス**を取得することができないので、RecyclerViewにidを設定してあげます。
 ```
 android:id="@+id/notes_view"
@@ -126,17 +127,14 @@ activity_main.xmlの全体像
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-## Noteオブジェクトを作成する
+## Noteクラスを作成する
 今回、アプリで必要なデータとして以下のものが挙げあれます。
 - 画像のリソースId
 - タイトル
-- 本文
-
+- 本文　　
+  
 これらを多次元配列で扱ってもいいのですが、  
 せっかくJavaのオブジェクト指向の仕様を学習したところなので活用していきます。 
- 
-
-### Noteクラスを作成する
 「パッケージ名.アプリ名」を右クリックして  
 <img src="./img04.png" width="600">
 
@@ -154,30 +152,31 @@ public class Note {
 }
 ```
 
-### Noteクラスの実装をする
-Noteクラスの仕様は以下のようになります
+## Noteクラスの仕様
+Noteクラスの基本的な仕様は以下のようになります
 
-#### フィールド
+### フィールド
 |アクセッサー|型|名称|説明|
 |-|-|-|-|
 |private|int|imageResourceId|画像のリソースIdを保持します|
 |private|String|title|タイトル|
 |private|String|text|本文|
 
-#### メソッド
+  
+### メソッド
 |アクセッサー|戻り値|名称|引数|詳細|
 |-|-|-|-|-|
 |public|String|getImageResourceId|なし|imageResourceIdのgetter|
 |public|String|getTitle|なし|titleのgetter|
 |public|String|getText|なし|textのgetter|
 
-#### コンストラクタ
+### コンストラクタ
 |アクセッサー|引数|
 |-|-|
 |public|int imageResourceId, String title, String text|
 
-これをもとに作成します。
-### フィールドを実装
+これらをもとに作成します。
+## フィールドを実装
 ```
 package jp.kinoshita.imagenoteapp;
 
@@ -191,7 +190,7 @@ public class Note {
 }
 ```
 
-### getterメソッドを実装
+## getterメソッドを実装
 手動で実装してもいいのですがAndroidStudioにはgetterメソッドを自動で作成してくれる機能があります。
 
 Noteクラスを右クリックしてGenerate（生成する）を選択します。
@@ -268,13 +267,11 @@ public class Note {
 
 
 ## データの準備
-スマホのストレージから画像を持ってきてそれを表示するのも良かったのですが  
-今回は予め用意したデータを表示したいと思います。
+スマホのストレージやインターネットから画像を持ってきてそれを表示するのも良かったのですが、  
+  今回は予め用意したデータを表示したいと思います。
 
-### MainActivityを開く
-MainActivityを開いてください。
 
-### サンプル用のデータを作成します。
+## サンプル用のデータを作成します。
 以下の変数をMainActivityのフィールド（インスタンス変数）として初期化してください。  
 全て入力するのは苦行なのでコピーしてください。
 ```
@@ -314,15 +311,17 @@ MainActivityを開いてください。
 
 ```
 
-### データをもとにNoteを作成します。
-先ほど作成したサンプルデータをNoteに変換して、Noteリストを作成します。
+## Noteのリスト(List)を作成します
+先ほど作成したサンプルデータをもとに、  
+Noteインスタンスを作成して、ArrayListに追加します。  
 
-#### notesフィールドを宣言する
+
+### notesフィールドを宣言する
 ```
     List<Note> notes;
 ```
 
-#### onCreateメソッドに初期化ロジックを実装します。
+### onCreateメソッドに初期化ロジックを実装します。
 notesフィールドを初期化するロジックをonCreate中に書きます。  
 以下のクラスのインポートを忘れないでください
 - java.util.ArrayList;
@@ -344,8 +343,8 @@ ArrayList<Note> list = new ArrayList<>();
 ここまでのMainActivityの全体像
 [https://github.com/Kinoshita0623/ImageNoteApp/blob/master/app/src/main/java/jp/kinoshita/imagenoteapp/MainActivity.java](https://github.com/Kinoshita0623/ImageNoteApp/blob/notes%E3%81%AE%E5%88%9D%E6%9C%9F%E5%8C%96/app/src/main/java/jp/kinoshita/imagenoteapp/MainActivity.java);
 
-
-# RecyclerViewの実装
+---
+## RecyclerViewの実装
 ようやくこれからが本番です。
 RecyclerViewの仕組みとしてはレイアウトを何度も使い回すことによって、効率化をしています。  
 ## リスト表示のレイアウトを作成する。
@@ -405,13 +404,14 @@ resのlayoutを右クリックしてLayout Resource Fileを選択します。
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-### **Viewとそのidの関係と説明**
+## Viewとそのidの関係と説明
 後々使用するのでしっかりと把握してください。
 |View|id|詳細|
 |-|-|-|
 |ImageView|image_view|画像表示用|
 |TextView|title_view|タイトル表示用|
 |TextView|text_view|本文表示用|
+
 
 ## ViewHolderを作成&実装する
 ViewHolderで表示処理のための処理を行います。  
@@ -430,14 +430,16 @@ public class ItemNoteViewHolder extends RecyclerView.ViewHolder {
 
 ```
 
-### **フィールドを宣言します**
+## フィールドを宣言します
+importを忘れないようにしてください。
+
 ```
 private ImageView imageView;
 private TextView titleView;
 private TextView textView;
 ```
 
-### **コンストラクタを作成します**  
+## コンストラクタを作成します
 コンストラクタはView型 viewを受け取ります。
 
 ```
@@ -451,7 +453,7 @@ public ItemNoteViewHolder(View view){
 }
 ```
 
-### **onBindメソッドを作成する**
+## onBindメソッドを作成する
 ItemNoteViewHolderにonBindメソッドを作成します。
 ```
 public void onBind(Note note){
@@ -459,7 +461,7 @@ public void onBind(Note note){
 }
 ```
 
-### **onBindメソッドを実装する**
+## onBindメソッドを実装する
 onBindメソッドでitem_viewにデータをセットします。
 ```
 // item_noteのimage_viewにNoteに設定した画像をセットします。
@@ -513,10 +515,14 @@ public class ItemNoteViewHolder extends RecyclerView.ViewHolder {
 
 ```
 
-## RecyclerView.Adapterを実装する
-item_note（レイアウト）とデータの架け橋となる部分です。  
+## RecyclerView.Adapter
+RecyclerView.Adapterは、レイアウトの実体化と、  
+レイアウトの画面への取り付けとレイアウトへのデータのセットを行います。  
+RecyclerView.Adapterは抽象クラスなので、  
+継承してメソッドをオーバーライドします。
 
-### NoteListAdapterクラスを作成する
+
+## NoteListAdapterクラスを作成する
 RecyclerView.Adapter抽象クラスを継承してください。
 ```
 package jp.kinoshita.imagenoteapp;
@@ -530,8 +536,8 @@ public class NoteListAdapter extends RecyclerView.Adapter<ItemNoteViewHolder> {
 
 ```
 
-### フィールドを作成する
-NoteListAdapterに以下のフィールドを作成してください。
+## フィールドを作成する
+NoteListAdapterに以下のフィールドを作成してください。  
 いろいろエラーが出ていますが今は無視をします。
 ```
 ~~省略~~
@@ -543,7 +549,11 @@ public class NoteListAdapter extends RecyclerView.Adapter<ItemNoteViewHolder> {
 
 ```
 
-コンストラクタを作成します。
+## コンストラクタを作成します。
+List < Note >型のnotesを受け取り、  
+それをnotesフィールドに代入しています。  
+配列で代用することも可能ですが、  
+配列はいろいろと不便なためListを使用しています。
 ```
 public NoteListAdapter(List<Note> notes){
     this.notes = notes;
@@ -554,21 +564,22 @@ public NoteListAdapter(List<Note> notes){
 RecyclerView.Adpater抽象クラスの抽象メソッドをオーバーライドしていきます。  
 重要な部分なので一つずつオーバーライドしながら解説します。
 
-### getItemCountメソッド
+## getItemCountメソッド
 getItemCountメソッドをオーバーライドします。  
 RecyclerViewはこの**メソッドが返す数をもとにリストを表示**します。 
 
 
-なので今回はnotesを全て表示したいのでnotesの数を取得するsize()メソッドを呼び出して　　
-その数を返しています。
+なので今回はnotesを全て表示したいので、  
+notesの数を取得するsize()メソッドを呼び出して、その数を返しています。
 ```
 @Override
 public int getItemCount() {
   return this.notes.size();
+  // 配列の場合return this.notes.length;
 }
 ```
 
-### onCreateViewHolder
+## onCreateViewHolder
 ここで作成したItemNoteViewHolderのインスタンス化とitem_noteレイアウトをを画面にセットします。
 ```
 @NonNull
@@ -590,7 +601,7 @@ LayoutInflaterについてはAndroidのViewの仕組みをある程度理解す�
 仕組みは面白いので興味のある方は調べてみてください。
 
 
-### onBindViewHolder
+## onBindViewHolder
 ここでViewHolderのViewへデータをセットします。  
 positionとは表示されるリストの位置を表しています。  
 holderは作成したItemNoteViewHolderで、  
@@ -605,9 +616,9 @@ public void onBindViewHolder(@NonNull ItemNoteViewHolder holder, int position) {
 
 RecyclerView.Adapterの実装はここまでです。
 
-## つなぎ合わせる
+## MainActivityに組み込む
 ここまで様々なJavaクラスを作成しました。  
-それらを結合します。
+それらを使用してアプリケーションを完成させます。
 
 ### MainActivityを開く
 onCreateメソッドの中にコードを書き足していくのですが、  
@@ -616,7 +627,8 @@ onCreateメソッドの中にコードを書き足していくのですが、
 this.notes = list;
  ```
  **以降から書き足すようにしてください。**
- ### RecyclerViewを取得する
+
+ ## RecyclerViewを取得する
  activity_mainのRecyclerViewを取得します。  
  RecyclerViewのimportもしてください。
  ```
@@ -624,7 +636,7 @@ this.notes = list;
 RecyclerView notesView = findViewById(R.id.notes_view);
  ```
 
-### レイアウトマネージャーをインスタンス化する
+## レイアウトマネージャーをインスタンス化する
 レイアウトマネージャーとはRecyclerViewの表示を左右するものです。  
 これによってリスト表示や、グリッド表示、フレックス表示など様々な表示をすることができます。  
 今回はリスト表示するだけなのでLinearLayoutManagerを使用します。
@@ -637,7 +649,7 @@ notesView.setLayoutManager(layoutManager);
 
 ```
 
-### NoteListAdapterをインスタンス化する
+## NoteListAdapterをインスタンス化する
 コンストラクタに作成したサンプルデータを渡しています。
 ```
 // NotesListAdapterをインスタンス化する。コンストラクタにサンプルデータを渡す
@@ -740,8 +752,15 @@ public class MainActivity extends AppCompatActivity {
 
 <img src="img12.png" width="250">
 
-お疲れ様でした。
+今回はシンプルなリスト表示でしたが、  
+今回は利用しませんでしたが、getItemViewTypeを実装することによってViewとViewHolderをデータの内容によって動的に切り替えたりすることができます。  
+今回はリストの内容を更新することはないので触れませんでしたが、  
+notifyItemChangedやnotifyItemInsertedメソッドを呼び出すことによってリストの内容をリスト表示へ適応したりすることもできます。  
+また[ListAdapter](https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter)を使用することによって、データの更新分を探索して自動的に上記のnotify系メソッドを呼び出して表示更新を行ってくれるクラスもあります。
 
+
+
+全体のソースコードをアップロードしておきます。少しでも役に立つと嬉しいです。  
 [ソースコード](https://github.com/Kinoshita0623/ImageNoteApp)
 
 
