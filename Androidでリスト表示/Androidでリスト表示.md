@@ -52,7 +52,7 @@ XMLが表示されている人は以下の画像を参考に「レイアウト�
 XMLが表示されるようになると思います。
 とりあえず**androidx.recyclerview.widget.RecyclerViewが貼り付けられていればOKです。**
 
-```
+```xml:activity_main.xml
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -74,7 +74,7 @@ XMLが表示されるようになると思います。
 ここまでRecyclerViewを貼り付けることができたのでレイアウトを編集します。  
   
 何をしてあげたのかというとRecyclerViewを外側(親)のレイアウトめいいっぱいに広げるという作業をしました。
-```
+```xml:activity_main.xml
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -104,7 +104,7 @@ android:id="@+id/notes_view"
 
 とりあえずレイアウトの設定は完了しました。  
 activity_main.xmlの全体像
-```
+```xml:activity_main.xml
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -145,7 +145,7 @@ Name: に[Note]と入力し、OKします。
 それ以外の項目はわからない場合は入力しないでください。  <img src="./img05.png" width="600">
 
 Noteクラスが作成されたと思います。
-```
+```java:Note.java
 package jp.kinoshita.imagenoteapp;
 
 public class Note {
@@ -177,7 +177,7 @@ Noteクラスの基本的な仕様は以下のようになります
 
 これらをもとに作成します。
 ## フィールドを実装
-```
+```java:Note.java
 package jp.kinoshita.imagenoteapp;
 
 public class Note {
@@ -319,7 +319,7 @@ Noteインスタンスを作成して、ArrayListに追加します。
 
 
 ### notesフィールドを宣言する
-```
+```java:MainActivity.java
     List<Note> notes;
 ```
 
@@ -465,7 +465,7 @@ public void onBind(Note note){
 
 ## onBindメソッドを実装する
 onBindメソッドでitem_viewにデータをセットします。
-```java:ItemViewHolder.java
+```java:ItemNoteViewHolder.java
 // item_noteのimage_viewにNoteに設定した画像をセットします。
 imageView.setImageResource(note.getImageResourceId());
 
@@ -633,7 +633,7 @@ this.notes = list;
  ## RecyclerViewを取得する
  activity_mainのRecyclerViewを取得します。  
  RecyclerViewのimportもしてください。
- ```java:MainActivity.java
+ ``` java:MainActivity.java
 // RecyclerViewを取得する
 RecyclerView notesView = findViewById(R.id.notes_view);
  ```
@@ -642,7 +642,7 @@ RecyclerView notesView = findViewById(R.id.notes_view);
 レイアウトマネージャーとはRecyclerViewの表示を左右するものです。  
 これによってリスト表示や、グリッド表示、フレックス表示など様々な表示をすることができます。  
 今回はリスト表示するだけなのでLinearLayoutManagerを使用します。
-```java:MainActivity.java
+``` java:MainActivity.java
 // レイアウトマネージャーをインスタンス化する
 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
